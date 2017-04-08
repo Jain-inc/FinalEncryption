@@ -45,13 +45,12 @@ void transpose(int arr[3][3], int arr2[3][3])
 {
     int i, j;
     for(i=0; i<3; ++i)
-    {
         for(j=0; j<3; ++j)
             arr2[j][i] = arr[i][j];
-    }
+            
 }
 
-void inverse(int arr[3][3], float arr2[3][3], float d)
+void DivideByDeterminant(int arr[3][3], float arr2[3][3], float d)
 {
     int i, j;
     for(i=0; i<3; ++i)
@@ -75,7 +74,7 @@ void whole(int arr[3][3], float arr2[3][3])
 
     transpose(cof, adj);
 
-    inverse(adj, arr2, determ);
+    DivideByDeterminant(adj, arr2, determ);
 }
 
 void lettertonum(string x, int arr[], int length)

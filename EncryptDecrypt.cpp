@@ -20,7 +20,6 @@ int main()
     
     while(again==true){
 
-        ofstream myfile;
         int i; //holds the length of the string (always a multiple of 3)
         int b, count, j=0, a;
         string word; //holds the string that the user enters
@@ -33,15 +32,15 @@ int main()
         int ciph[1000] = {0};  //cipher text
 
         system("clear");
-        cout << "\t\t-------------------------------------------------" << endl;
-        cout << "\t\t               Welcome to CiphCrypt              " << endl;
-        cout << "\t\t                  Version 1.0                    " << endl;
-        cout << "\t\t-------------------------------------------------" << endl;
+        cout << "\t\t----------------------------------------------------" << endl;
+        cout << "\t\t                Welcome to CiphCrypt                " << endl;
+        cout << "\t\t                   Version 1.0                      " << endl;
+        cout << "\t\t----------------------------------------------------\n" << endl;
 
         string resp;
         bool tryAgain = true;
         while(tryAgain){
-            cout << "\n\nEncryption(1) or Decryption(2): ";
+            cout << "\nEncryption(1) or Decryption(2): ";
             cin >> resp;
             if(resp == "1" || resp == "2")
                 tryAgain = false;
@@ -87,22 +86,23 @@ int main()
                 i = i + 2; //increase the length by 2
             }
 
-            myfile.open(filename);
+            ofstream outFile;
+            outFile.open(filename);
 
             for (int y = 0; y < 3; ++y)
                 for (int z = 0; z < 3; ++z)
-                    myfile << inv[y][z] << endl;
+                    outFile << inv[y][z] << endl; //inserts the inverse of the key into the file
 
-            myfile << i << endl;
+            outFile << i << endl;
             matrixmult(key, i, matr, ciph);
 
-            for (int d = 0; d < i; ++d) { //inserts the cipher text into encrypt.txt
-                myfile << ciph[d] << endl;
+            for (int d = 0; d < i; ++d) { //inserts the cipher text into the file
+                outFile << ciph[d] << endl;
             }
-            myfile.close();
+            outFile.close();
 
             tryAgain = true;
-            while(tryAgain){
+            while(tryAgain){  //asks if the user wants to run the program again
                 cout << "\nDo you wish to continue (Y/N)? ";
                 cin >> againResp;
 
@@ -127,30 +127,35 @@ int main()
 
             //decryption:
         else if (resp == "2") {
-            ifstream myfile2;
-            myfile2.open(filename);
-            j = 0;
+
+            ifstream inFile;
+            inFile.open(filename);
+
+            // if the file cannot be found
+            if(inFile.fail()){
+                cout << "Error! File not found!" << endl;
+            }
 
             int ciph2[1000] = {0};
-            int matr2[1000];
-            int ikey[3][3];
+            int matr2[1000]; 
+            int ikey[3][3]; //inverse of the key
             int y, z;
             for (y = 0; y < 3; ++y)
                 for (z = 0; z < 3; ++z)
-                    myfile2 >> ikey[y][z];
+                    inFile >> ikey[y][z];
 
                 
-            char ans[1000];
+            char ans[1000]; // holds the letters for the decrypted message
 
-            myfile2 >> i;
+            inFile >> i;
             for (int b = 0; b < i; ++b)
-                myfile2 >> matr2[b];
+                inFile >> matr2[b];
 
-            myfile2.close();
+            inFile.close();
 
             matrixmult(ikey, i, matr2, ciph2);
 
-            numtoletter(ciph2, ans, i);
+            numtoletter(ciph2, ans, i); //converts the numbers back into letters
 
             cout << "\n";
             
@@ -159,6 +164,8 @@ int main()
         
             cout << "\n\t" << endl;
             tryAgain = true;
+
+            // allows the user to run the program again
             while(tryAgain){
                 cout << "Do you wish to continue (Y/N)? ";
                 cin >> againResp;
@@ -180,8 +187,6 @@ int main()
         }
     }
 }
-
-
 
 
 
