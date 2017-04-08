@@ -66,7 +66,7 @@ int main()
                 determ = determinant(key);
             } //key
 
-            whole(key, inv);
+            invert(key, inv);
 
             cout << "\nEnter the string:" << endl;
             getline(cin, word);

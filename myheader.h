@@ -41,7 +41,7 @@ void minor(int arr[3][3], int arr2[3][3])
     arr2[2][2] = arr[0][0]*arr[1][1]-arr[1][0]*arr[0][1];
 }
 
-void transpose(int arr[3][3], int arr2[3][3])
+void transpose(int arr[3][3], float arr2[3][3])
 {
     int i, j;
     for(i=0; i<3; ++i)
@@ -49,19 +49,9 @@ void transpose(int arr[3][3], int arr2[3][3])
             arr2[j][i] = arr[i][j];
             
 }
-
-void DivideByDeterminant(int arr[3][3], float arr2[3][3], float d)
-{
-    int i, j;
-    for(i=0; i<3; ++i)
-        for(j=0; j<3; ++j)
-            arr2[i][j] = arr[i][j]/d;
-
-}
-void whole(int arr[3][3], float arr2[3][3])
+void invert(int arr[3][3], float arr2[3][3])
 {
     int cof[3][3] = {0};
-    int adj[3][3] = {0};
     int i, j;
     float determ = determinant(arr);
     minor(arr, cof);
@@ -72,9 +62,7 @@ void whole(int arr[3][3], float arr2[3][3])
     cof[2][1] *= -1;
     cof[1][2] *= -1;
 
-    transpose(cof, adj);
-
-    DivideByDeterminant(adj, arr2, determ);
+    transpose(cof, arr2);
 }
 
 void lettertonum(string x, int arr[], int length)
