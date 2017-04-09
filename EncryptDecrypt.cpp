@@ -57,7 +57,7 @@ int main()
         //encryption:
         if(resp == "1") {
             cin.ignore();
-            int determ;
+            int determ = 0;
             while(determ!=1) //makes the determinant a 1 so that the inverse is an integer
             {
                 for (int y = 0; y < 3; ++y)
@@ -128,42 +128,44 @@ int main()
 
             //decryption:
         else if (resp == "2") {
-
+            bool fileError = false;
             ifstream inFile;
             inFile.open(filename);
 
             // if the file cannot be found
             if(inFile.fail()){
-                cout << "Error! File not found!" << endl;
+                cout << "\nError! File not found!\n" << endl;
+                fileError = true;
+            }
+            if(!fileError){
+                int ciph2[1000] = {0};
+                int matr2[1000]; 
+                int ikey[3][3]; //inverse of the key
+                int y, z;
+                for (y = 0; y < 3; ++y)
+                    for (z = 0; z < 3; ++z)
+                        inFile >> ikey[y][z];
+
+                    
+                char ans[1000]; // holds the letters for the decrypted message
+
+                inFile >> i;
+                for (int b = 0; b < i; ++b)
+                    inFile >> matr2[b];
+
+                inFile.close();
+
+                matrixmult(ikey, i, matr2, ciph2);
+
+                numtoletter(ciph2, ans, i); //converts the numbers back into letters
+
+                cout << "\n";
+                for(int g = 0; g < i; ++g) 
+                    cout << ans[g];
+            
+                cout << "\n\t" << endl;
             }
 
-            int ciph2[1000] = {0};
-            int matr2[1000]; 
-            int ikey[3][3]; //inverse of the key
-            int y, z;
-            for (y = 0; y < 3; ++y)
-                for (z = 0; z < 3; ++z)
-                    inFile >> ikey[y][z];
-
-                
-            char ans[1000]; // holds the letters for the decrypted message
-
-            inFile >> i;
-            for (int b = 0; b < i; ++b)
-                inFile >> matr2[b];
-
-            inFile.close();
-
-            matrixmult(ikey, i, matr2, ciph2);
-
-            numtoletter(ciph2, ans, i); //converts the numbers back into letters
-
-            cout << "\n";
-            
-            for(int g = 0; g < i; ++g) 
-                cout << ans[g];
-        
-            cout << "\n\t" << endl;
             tryAgain = true;
 
             // allows the user to run the program again
