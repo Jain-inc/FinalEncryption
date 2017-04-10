@@ -21,7 +21,7 @@ int main()
     
     while(again==true){
 
-        int i; //holds the length of the string (always a multiple of 3)
+        int length; //holds the length of the string (always a multiple of 3)
         int b, count, j=0, a;
         string word; //holds the string that the user enters
         float matr[1000]; //letters converted to numbers
@@ -55,7 +55,7 @@ int main()
         if(resp == "1") {
             cin.ignore();
             int determ = 0;
-            while(determ==0) //makes the determinant a 1 so that the inverse is an integer
+            while(determ==0) //Ensures that the determinant is not a 0 so that the key is invertible
             {
                 for (int y = 0; y < 3; ++y)
                     for (int z = 0; z < 3; ++z)
@@ -63,25 +63,16 @@ int main()
 
                 determ = determinant(key);
             } //key
+ 
+            invert(key, inv); //puts the inverse of the key inside inv[][]
 
-            invert(key, inv);   
-
-            cout << "\nEnter the string:" << endl;
+            cout << "\nEnter the message to by decrypted:" << endl;
             getline(cin, word);
-            i = word.length();
+            length = word.length();
 
-            lettertonum(word, matr, i);
+            lettertonum(word, matr, length);
 
-            if (i % 3 == 2) //add 1 0 to the end of the string to make it divisible by 3
-            {
-                matr[i] = 1;
-                ++i; //increase length by 1
-            } else if (i % 3 == 1) //add 2 zeroes to the end of the string to make it divisible by 3;
-            {
-                matr[i] = 1;
-                matr[i + 1] = 1;
-                i = i + 2; //increase the length by 2
-            }
+            addFiller(matr, length);
           
             ofstream outFile;
             outFile.open(filename);
@@ -90,33 +81,16 @@ int main()
                 for (int z = 0; z < 3; ++z)
                     outFile << inv[y][z] << endl; //inserts the inverse of the key into the file
 
-            outFile << i << endl;
-            matrixmult(key, i, matr, ciph);
+            outFile << length << endl;
+            matrixmult(key, length, matr, ciph);
 
-
-            for (int d = 0; d < i; ++d) //inserts the cipher text into the file
+            for (int d = 0; d < length; ++d) //inserts the cipher text into the file
                 outFile << ciph[d] << endl;
             
             outFile.close();
 
-            tryAgain = true;
-            while(tryAgain){  //asks if the user wants to run the program again
-                cout << "\nDo you wish to continue (Y/N)? ";
-                cin >> againResp;
-
-                if(againResp == "y" || againResp == "Y")
-                {
-                    again = true;
-                    tryAgain = false;
-                }
-                else if (againResp == "N" || againResp == "n")
-                {
-                    again = false;
-                    tryAgain = false;
-                }
-                else
-                    tryAgain = true;
-            }
+            // allows the user to run the program again
+            askAgain(tryAgain, again, againResp);
         }
 
 
@@ -142,46 +116,27 @@ int main()
                          
                 char ans[1000]; // holds the letters for the decrypted message
 
-                inFile >> i;
-                for (int b = 0; b < i; ++b)
+                inFile >> length;
+                for (int b = 0; b < length; ++b)
                     inFile >> matr2[b];
 
                 inFile.close();
 
-                matrixmult(ikey, i, matr2, ciph2);
+                matrixmult(ikey, length, matr2, ciph2);
 
-                for(int z = 0; z<i; ++z) //accounts for accuracy issue
+                for(int z = 0; z<length; ++z) //accounts for accuracy issue
                     ciph2[z] = floor(ciph2[z] + 0.5);
             
-                numtoletter(ciph2, ans, i); //converts the numbers back into letters
+                numtoletter(ciph2, ans, length); //converts the numbers back into letters
 
-                cout << "\n";
-                for(int g = 0; g < i; ++g) 
+                cout << "\nDecrypted Message:\n\n";
+                for(int g = 0; g < length; ++g) 
                     cout << ans[g];
-            
-                cout << "\n\t" << endl;
+                cout << "\n";
             }
-
-            tryAgain = true;
 
             // allows the user to run the program again
-            while(tryAgain){
-                cout << "Do you wish to continue (Y/N)? ";
-                cin >> againResp;
-
-                if(againResp == "y" || againResp == "Y")
-                {
-                    again = true;
-                    tryAgain = false;
-                }
-                else if (againResp == "N" || againResp == "n")
-                {
-                    again = false;
-                    tryAgain = false;
-                }
-                else
-                    tryAgain = true;
-            }
+            askAgain(tryAgain, again, againResp);
 
         }
     }

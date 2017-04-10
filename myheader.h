@@ -75,13 +75,12 @@ void lettertonum(string x, float arr[], int length)
         if (x[b] == ' ')
             arr[b] = 1;
         else
-            arr[b] = pow((toascii(x[b]) + 16), 2) - 10000;
+            arr[b] = pow((int(x[b]) + 16), 2) - 10000;
     }
 }
 
 void numtoletter(float arr[], char ans[], int length)
 {
-    int d;
     for (int d = 0; d < length; ++d) {
             if (arr[d] == 1)
                 ans[d] = ' ';
@@ -89,5 +88,43 @@ void numtoletter(float arr[], char ans[], int length)
                 ans[d] = sqrt(arr[d] + 10000) - 16;
 
         }
-
 }
+void addFiller(float arr[], int &length)
+{
+    if (length % 3 == 2) //add 1 0 to the end of the string to make it divisible by 3
+    {
+        arr[length] = 1;
+        ++length; //increase length by 1
+    } else if (length % 3 == 1) //add 2 zeroes to the end of the string to make it divisible by 3;
+    {
+        arr[length] = 1;
+        arr[length + 1] = 1;
+        length = length + 2; //increase the length by 2
+    }
+}
+
+void askAgain(bool tryAgain, bool &again, string againResp)
+{
+    tryAgain = true;
+    while(tryAgain){
+        cout << "\nDo you wish to continue (Y/N)? ";
+        cin >> againResp;
+
+        if(againResp == "y" || againResp == "Y")
+        {
+            again = true;
+            tryAgain = false;
+        }
+        else if (againResp == "N" || againResp == "n")
+        {
+            again = false;
+            tryAgain = false;
+        }
+        else
+            tryAgain = true;
+    }
+}
+
+
+
+
