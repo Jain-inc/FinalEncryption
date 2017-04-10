@@ -59,7 +59,7 @@ int main()
             {
                 for (int y = 0; y < 3; ++y)
                     for (int z = 0; z < 3; ++z)
-                        key[y][z] = (rand())%1000;
+                        key[y][z] = (rand())%100;
 
                 determ = determinant(key);
             } //key
