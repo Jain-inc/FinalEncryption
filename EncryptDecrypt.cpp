@@ -18,19 +18,19 @@ int main()
 {
     srand(time(0));
     bool again = true;
-    
+
     while(again==true){
 
         int length; //holds the length of the string (always a multiple of 3)
         int b, count, j=0, a;
         string word; //holds the string that the user enters
-        float matr[1000]; //letters converted to numbers
+        int matr[1000]; //letters converted to numbers
         string againResp;
 
-        float key[3][3];// = {7, 5, 7, 8, 6, 8, 6, 8, 4}; //key
+        int key[3][3];// = {7, 5, 7, 8, 6, 8, 6, 8, 4}; //key
         float inv[3][3] = {0}; //inverse of the key
 
-        float ciph[1000] = {0};  //cipher text
+        int ciph[1000] = {0};  //cipher text
 
         system("clear");
         cout << "\t\t----------------------------------------------------" << endl;
@@ -55,15 +55,15 @@ int main()
         if(resp == "1") {
             cin.ignore();
             int determ = 0;
-            while(determ==0) //Ensures that the determinant is not a 0 so that the key is invertible
+            while(determ != 1) //Ensures that the determinant is not a 0 so that the key is invertible
             {
                 for (int y = 0; y < 3; ++y)
                     for (int z = 0; z < 3; ++z)
-                        key[y][z] = (rand())%100;
+                        key[y][z] = ((rand())%100)+1;
 
                 determ = determinant(key);
             } //key
- 
+
             invert(key, inv); //puts the inverse of the key inside inv[][]
 
             cout << "\nEnter the message to by decrypted:" << endl;
@@ -73,13 +73,14 @@ int main()
             lettertonum(word, matr, length);
 
             addFiller(matr, length);
-          
+
             ofstream outFile;
             outFile.open(filename);
 
             for (int y = 0; y < 3; ++y)
                 for (int z = 0; z < 3; ++z)
                     outFile << inv[y][z] << endl; //inserts the inverse of the key into the file
+                
 
             outFile << length << endl;
             matrixmult(key, length, matr, ciph);
@@ -102,18 +103,18 @@ int main()
 
             // if the file cannot be found
             if(inFile.fail()){
-                cout << "\nError! File not found!\n" << endl;
+                cout << "\nError! File not found!" << endl;
                 fileError = true;
             }
             if(!fileError){   //if there isn't a file error
-                float ciph2[1000] = {0};
-                float matr2[1000]; 
-                float ikey[3][3]; //inverse of the key
+                int ciph2[1000] = {0};
+                int matr2[1000];
+                int ikey[3][3]; //inverse of the key
                 int y, z;
                 for (y = 0; y < 3; ++y)
                     for (z = 0; z < 3; ++z)
                         inFile >> ikey[y][z];
-                         
+
                 char ans[1000]; // holds the letters for the decrypted message
 
                 inFile >> length;
@@ -124,14 +125,12 @@ int main()
 
                 matrixmult(ikey, length, matr2, ciph2);
 
-                for(int z = 0; z<length; ++z) //accounts for accuracy issue
-                    ciph2[z] = floor(ciph2[z] + 0.5);
-            
                 numtoletter(ciph2, ans, length); //converts the numbers back into letters
 
                 cout << "\nDecrypted Message:\n\n";
-                for(int g = 0; g < length; ++g) 
+                for(int g = 0; g < length; ++g)
                     cout << ans[g];
+                
                 cout << "\n";
             }
 
