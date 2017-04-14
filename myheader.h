@@ -41,7 +41,7 @@ void minor(int arr[3][3], int arr2[3][3])
     arr2[2][2] = arr[0][0]*arr[1][1]-arr[1][0]*arr[0][1];
 }
 
-void transpose(int arr[3][3], float arr2[3][3])
+void transpose(int arr[3][3], int arr2[3][3])
 {
     int i, j;
     for(i=0; i<3; ++i)
@@ -49,7 +49,7 @@ void transpose(int arr[3][3], float arr2[3][3])
             arr2[j][i] = arr[i][j];
             
 }
-void invert(int arr[3][3], float arr2[3][3])
+void invert(int arr[3][3], int arr2[3][3])
 {
     int cof[3][3] = {0};
     int i, j;
@@ -69,10 +69,7 @@ void lettertonum(string x, int arr[], int length)
 {
     int b;
     for (b = 0; b < length; ++b) {  //convert letter to number
-        if (x[b] == ' ')
-            arr[b] = 1;
-        else
-            arr[b] = pow((int(x[b]) + 16), 2) - 10000;
+        arr[b] = pow((int(x[b]) + 16), 2) - 10000;
     }
 }
 

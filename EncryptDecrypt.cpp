@@ -19,7 +19,7 @@ int main()
     srand(time(0));
     bool again = true;
 
-    while(again==true){
+    while(again){
 
         int length; //holds the length of the string (always a multiple of 3)
         int b, count, j=0, a;
@@ -28,7 +28,7 @@ int main()
         string againResp;
 
         int key[3][3];// = {7, 5, 7, 8, 6, 8, 6, 8, 4}; //key
-        float inv[3][3] = {0}; //inverse of the key
+        int inv[3][3] = {0}; //inverse of the key
 
         int ciph[1000] = {0};  //cipher text
 
@@ -81,7 +81,6 @@ int main()
                 for (int z = 0; z < 3; ++z)
                     outFile << inv[y][z] << endl; //inserts the inverse of the key into the file
                 
-
             outFile << length << endl;
             matrixmult(key, length, matr, ciph);
 
@@ -89,9 +88,6 @@ int main()
                 outFile << ciph[d] << endl;
             
             outFile.close();
-
-            // allows the user to run the program again
-            askAgain(tryAgain, again, againResp);
         }
 
 
@@ -111,19 +107,19 @@ int main()
                 int matr2[1000];
                 int ikey[3][3]; //inverse of the key
                 int y, z;
-                for (y = 0; y < 3; ++y)
+                for (y = 0; y < 3; ++y)     //gets the inverse of the key from the text file
                     for (z = 0; z < 3; ++z)
                         inFile >> ikey[y][z];
 
                 char ans[1000]; // holds the letters for the decrypted message
 
                 inFile >> length;
-                for (int b = 0; b < length; ++b)
+                for (int b = 0; b < length; ++b)    //gets the cipher text from the file
                     inFile >> matr2[b];
 
                 inFile.close();
 
-                matrixmult(ikey, length, matr2, ciph2);
+                matrixmult(ikey, length, matr2, ciph2); 
 
                 numtoletter(ciph2, ans, length); //converts the numbers back into letters
 
@@ -133,11 +129,9 @@ int main()
                 
                 cout << "\n";
             }
-
-            // allows the user to run the program again
-            askAgain(tryAgain, again, againResp);
-
         }
+        // allows the user to run the program again
+        askAgain(tryAgain, again, againResp);
     }
 }
 
