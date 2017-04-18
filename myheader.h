@@ -22,7 +22,7 @@ void matrixmult(int arr[3][3], int f, int arr2[], int ans[])
 
 int determinant(int arr[3][3])
 {
-    int r, deter = 0;
+    int deter = 0;
     deter = (arr[0][0]*(arr[1][1]*arr[2][2]-arr[2][1]*arr[1][2])) - (arr[0][1] * (arr[1][0]*arr[2][2]-arr[2][0]*arr[1][2])) + (arr[0][2] * (arr[1][0]*arr[2][1]-arr[2][0]*arr[1][1]));
     return deter;
 }
