@@ -29,7 +29,6 @@ int determinant(int arr[3][3])
 
 void minor(int arr[3][3], int arr2[3][3])
 {
-    int i, j;
     arr2[0][0] = arr[1][1]*arr[2][2]-arr[2][1]*arr[1][2];
     arr2[0][1] = arr[1][0]*arr[2][2]-arr[2][0]*arr[1][2];
     arr2[0][2] = arr[1][0]*arr[2][1]-arr[2][0]*arr[1][1];
@@ -52,7 +51,6 @@ void transpose(int arr[3][3], int arr2[3][3])
 void invert(int arr[3][3], int arr2[3][3])
 {
     int cof[3][3] = {0};
-    int i, j;
     int determ = determinant(arr);
     minor(arr, cof);
 
