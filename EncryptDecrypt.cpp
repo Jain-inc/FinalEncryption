@@ -53,7 +53,7 @@ int main()
         if(resp == "1") {
             cin.ignore();
             int determ = 0;
-            while(determ != 1) //Ensures that the determinant is not a 0 so that the key is invertible
+            while(determ != 1) //Makes the determinant a 1 so that the inverse has all integers
             {
                 for (int y = 0; y < 3; ++y)
                     for (int z = 0; z < 3; ++z)
