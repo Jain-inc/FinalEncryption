@@ -97,28 +97,5 @@ void addFiller(int arr[], int &length)
     }
 }
 
-void askAgain(bool tryAgain, bool &again, string againResp)
-{
-    tryAgain = true;
-    while(tryAgain){
-        cout << "\nDo you wish to continue (Y/N)? ";
-        cin >> againResp;
-
-        if(againResp == "y" || againResp == "Y")
-        {
-            again = true;
-            tryAgain = false;
-        }
-        else if (againResp == "N" || againResp == "n")
-        {
-            again = false;
-            tryAgain = false;
-        }
-        else
-            tryAgain = true;
-    }
-}
-
-
 
 

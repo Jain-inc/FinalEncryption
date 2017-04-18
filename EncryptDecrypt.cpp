@@ -13,14 +13,12 @@
 
 using namespace std;
 
-
 int main()
 {
     srand(time(0));
     bool again = true;
 
     while(again){
-
         int length; //holds the length of the string (always a multiple of 3)
         int b, count, j=0, a;
         string word; //holds the string that the user enters
@@ -66,7 +64,7 @@ int main()
 
             invert(key, inv); //puts the inverse of the key inside inv[][]
 
-            cout << "\nEnter the message to by decrypted:" << endl;
+            cout << "\nEnter the message to be encrypted:" << endl;
             getline(cin, word);
             length = word.length();
 
@@ -131,7 +129,24 @@ int main()
             }
         }
         // allows the user to run the program again
-        askAgain(tryAgain, again, againResp);
+        tryAgain = true;
+        while(tryAgain){
+            cout << "\nDo you wish to continue (Y/N)? ";
+            cin >> againResp;
+
+            if(againResp == "y" || againResp == "Y")
+            {
+                again = true;
+                tryAgain = false;
+            }
+            else if (againResp == "N" || againResp == "n")
+            {
+                again = false;
+                tryAgain = false;
+            }
+            else
+                tryAgain = true;
+        }
     }
 }
 
