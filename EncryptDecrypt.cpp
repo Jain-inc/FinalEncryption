@@ -1,5 +1,5 @@
 //
-// Created by Aditya Jain, Danielle Cui, and Avinash Kumar
+// Created by Aditya Jain
 //
 // letter = (ascii + 16)^2-10000
 // filler = 1
